@@ -17,10 +17,6 @@ import com.android.bledemo.utils.AppConstant.DEFAULT_SCAN_TIME_OUT
 import com.android.bledemo.utils.AppConstant.PREF_DEVICE_MAC_ADDRESS
 import java.util.*
 import kotlin.collections.HashMap
-import android.bluetooth.le.ScanFilter
-import com.android.bledemo.utils.CommandConstant
-import android.bluetooth.le.ScanSettings
-import android.os.ParcelUuid
 
 class BLEManager {
 

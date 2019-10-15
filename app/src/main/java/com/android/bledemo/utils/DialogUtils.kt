@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import com.android.bledemo.R
 import com.android.bledemo.appinterface.OkCancelDialogInterface
+import com.android.bledemo.appinterface.OkDialogInterface
 
 
 object DialogUtils {
@@ -40,4 +41,31 @@ object DialogUtils {
             dialog.show()
     }
 
+    /**
+     * Show Default dialog.
+     *
+     * @param context Application/Activity Context for creating dialog.
+     * @param title   Title of dialog
+     * @param message Message of dialog
+     * @param callback Callback for button click of dialog
+     */
+    fun okDialog(context: Context, title: String, message: String, callback: OkDialogInterface) {
+
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setCancelable(false)
+        builder.setPositiveButton(context.getString(android.R.string.ok)) { dialog, _ ->
+            dialog.dismiss()
+            callback.ok()
+        }
+        val dialog = builder.create()
+
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        }
+
+        if (!dialog.isShowing)
+            dialog.show()
+    }
 }

@@ -1,7 +1,6 @@
 package com.android.bledemo.ui.appview.command
 
 import android.bluetooth.BluetoothGattDescriptor
-import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
@@ -18,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.android.bledemo.R
 import com.android.bledemo.appinterface.CharacteristicsChangeInterface
+import com.android.bledemo.appinterface.OkDialogInterface
 import com.android.bledemo.base.AppFragment
 import com.android.bledemo.databinding.FragmentHeartRateBinding
 import com.android.bledemo.ui.appview.MainActivity
@@ -25,10 +25,10 @@ import com.android.bledemo.ui.model.BLEDeviceModel
 import com.android.bledemo.ui.viewmodel.DeviceViewModel
 import com.android.bledemo.utils.AppConstant
 import com.android.bledemo.utils.AppConstant.BLE_DESCRIPTOR_WRITE_DELAY
+import com.android.bledemo.utils.DialogUtils
 import com.android.bledemo.utils.ProgressUtils
 import kotlinx.android.synthetic.main.fragment_heart_rate.*
 import kotlinx.coroutines.CoroutineScope
-
 
 
 class HeartRateFragment : AppFragment(), CharacteristicsChangeInterface {
@@ -79,8 +79,12 @@ class HeartRateFragment : AppFragment(), CharacteristicsChangeInterface {
 
         })
 
-        deviceViewModel?.bleDeviceList?.observe(this, Observer {
-
+        deviceViewModel?.listServiceCharacteristics?.observe(this, Observer {
+            DialogUtils.okDialog(context!!, "", it, object :
+                OkDialogInterface {
+                override fun ok() {
+                }
+            })
         })
 
         deviceViewModel?.connectedDevice?.observe(this, Observer {

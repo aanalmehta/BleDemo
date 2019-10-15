@@ -2,14 +2,9 @@ package com.android.bledemo.utils
 
 import android.widget.Toast
 import androidx.annotation.IntDef
-import androidx.annotation.StringRes
 import com.android.bledemo.App
 
 object ToastUtils {
-
-    private fun shortToast(text: String) {
-        show(text, Toast.LENGTH_SHORT)
-    }
 
     fun longToast(text: String) {
         show(text, Toast.LENGTH_LONG)

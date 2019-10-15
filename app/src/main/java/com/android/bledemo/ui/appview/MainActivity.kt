@@ -26,7 +26,7 @@ class MainActivity : BaseActivity(), PermissionUtils.PermissionResult {
     }
 
     override fun onCreateView(savedInstanceState: Bundle?) {
-        setSupportActionBar(mainToolbar)
+        setSupportActionBar(toolbar)
 
         deviceViewModel = ViewModelProviders.of(this).get(DeviceViewModel::class.java)
         appFragmentManager?.addFragment(AppFragmentState.F_SCAN_DEVICE, null, false)

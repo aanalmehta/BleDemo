@@ -7,13 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.android.bledemo.R.id.btnScanStart
 import com.android.bledemo.R.id.btnScanStop
+import com.android.bledemo.R.id.btnServices
 import com.android.bledemo.appinterface.CharacteristicsChangeInterface
+import com.android.bledemo.appinterface.OkCancelDialogInterface
+import com.android.bledemo.appinterface.OkDialogInterface
 import com.android.bledemo.ble.BLEAppInterface
 import com.android.bledemo.ble.BLEManager
 import com.android.bledemo.ui.model.BLEDeviceModel
-import com.android.bledemo.utils.AppConstant
-import com.android.bledemo.utils.CommandConstant
-import com.android.bledemo.utils.ProgressUtils
+import com.android.bledemo.utils.*
 
 class DeviceViewModel(application: Application) : AndroidViewModel(application), BLEAppInterface {
     val bleDeviceList = MutableLiveData<ArrayList<BLEDeviceModel>>()
@@ -26,6 +27,7 @@ class DeviceViewModel(application: Application) : AndroidViewModel(application),
     var connectedDevice: MutableLiveData<Pair<HashMap<String, BLEDeviceModel>, String>> = MutableLiveData()
     var selectedMacAddress = MutableLiveData<String>()
     var connectionState = MutableLiveData<String>()
+    var listServiceCharacteristics = MutableLiveData<String>()
 
     init {
         bleManger = BLEManager()
@@ -46,6 +48,18 @@ class DeviceViewModel(application: Application) : AndroidViewModel(application),
             }
             btnScanStop -> {
                 stopScanningDevices()
+            }
+            btnServices -> {
+                var list = ""
+                val bleModel = serviceFoundOfDevice.value
+                val servicesList = bleModel?.bluetoothGatt?.services
+                for (service in servicesList!!) {
+                    list += "Service: \n    ${service.uuid}\nCharacteristics: \n"
+                    for (characteristic in service.characteristics) {
+                        list += "   ${characteristic.uuid}\n"
+                    }
+                }
+                listServiceCharacteristics.postValue(list)
             }
         }
     }
