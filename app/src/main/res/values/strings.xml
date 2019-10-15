@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Ble Demo</string>
+    <string name="scan_start">Scan Start</string>
+    <string name="scan_stop">Scan Stop</string>
+    <string name="lbl_device_disconnected">Your device %1$s is disconnected!!</string>
+    <string name="lbl_device_connected">Your device %1$s is connected!!</string>
+    <string name="title_scan_device">Scan Device</string>
+    <string name="title_command_list">Heart Rate</string>
+    <string name="error_select_service">Please select service and characteristics of device %1$s(%2$s) for send command.</string>
+    <string name="error_select_characteristics">Please select characteristics of device %1$s(%2$s) for send command.</string>
+    <string name="empty_device_name">N/A</string>
+    <string name="alert_location">Please turn ON location.</string>
+    <string name="label_bpm">BPM</string>
+    <string name="label_blank">-</string>
+</resources>

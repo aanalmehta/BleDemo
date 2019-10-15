@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="constant"
+            type="com.android.bledemo.utils.AppConstant" />
+
+        <variable
+            name="device"
+            type="com.android.bledemo.ui.model.BLEDeviceModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBluetooth"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvName"
+            app:layout_constraintBottom_toBottomOf="@+id/tvIP"
+            android:layout_width="wrap_content"
+            android:padding="8dp"
+            bind:setImage='@{device.imageManufacturer !=null ? device.imageManufacturer :@drawable/ic_bluetooth }'
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_vertical"
+            android:text='@{device.bleDevice.name !=null ? device.bleDevice.name :@string/empty_device_name }'
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/btnConnectState"
+            app:layout_constraintStart_toEndOf="@+id/ivBluetooth"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvIP"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@{device.bleDevice.address}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnConnectState"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConnectState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background='@{device.connectionState==constant.BLE_STATE_CONNECT ? @color/grey :@color/lightBlue}'
+            android:elevation="5dp"
+            android:padding="10dp"
+            android:text='@{device.connectionState}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
