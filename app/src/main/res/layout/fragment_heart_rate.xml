@@ -26,16 +26,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/ivHeartRate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnServices">
+
+            <TextView
+                android:id="@+id/tvServiceCharacteristicData"
+                android:text="@{deviceModel.listServiceCharacteristics}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivHeartRate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/tvBPM"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_pulse" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -45,9 +58,10 @@
             android:gravity="center"
             android:text="@string/label_bpm"
             android:textSize="32sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvPulseValue"
-            app:layout_constraintTop_toBottomOf="@+id/ivHeartRate" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPulseValue"
@@ -56,19 +70,19 @@
             android:gravity="center"
             android:text="@{deviceModel.commandResult != null ? deviceModel.commandResult : @string/label_blank}"
             android:textSize="48sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginBottom="24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvBPM" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tvConnectionState"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvConnectionState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="24sp"
+            android:textSize="18sp"
+            android:layout_margin="16dp"
             android:text="@{deviceModel.connectionState}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

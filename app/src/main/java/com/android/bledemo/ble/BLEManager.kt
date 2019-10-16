@@ -88,7 +88,7 @@ class BLEManager {
         mBluetoothAdapter = bluetoothManager.adapter
 
         this.bleAppInterface = bleAppInterface
-        commandManager = BLECommandManager(bleAppInterface, this)
+        commandManager = BLECommandManager(bleAppInterface)
         myBluetoothGattCallback = BLEGattCallback(bleAppInterface, commandManager!!, this)
 
     }
@@ -107,7 +107,7 @@ class BLEManager {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //
                 /*val scanFilter = ScanFilter.Builder()
-                    .setServiceUuid(ParcelUuid(UUID.fromString(CommandConstant.BLE_SERVICE_UUID)))
+                    .setServiceUuid(ParcelUuid(UUID.fromString(CommandConstant.HEART_RATE_SERVICE_UUID)))
                     .build()
                 val scanFilters = ArrayList<ScanFilter>()
                 scanFilters.add(scanFilter)
@@ -199,14 +199,6 @@ class BLEManager {
             }
         }
         return false
-    }
-
-    fun sendCommand(command: Byte, sensorDetails: Boolean = false, selectedMacAddress: String) {
-        commandManager?.sendCommand(
-            command,
-            sensorDetails = sensorDetails,
-            selectedMacAddress = selectedMacAddress
-        )
     }
 
     companion object {

@@ -9,12 +9,15 @@ import com.android.bledemo.R.id.btnScanStart
 import com.android.bledemo.R.id.btnScanStop
 import com.android.bledemo.R.id.btnServices
 import com.android.bledemo.appinterface.CharacteristicsChangeInterface
-import com.android.bledemo.appinterface.OkCancelDialogInterface
-import com.android.bledemo.appinterface.OkDialogInterface
 import com.android.bledemo.ble.BLEAppInterface
 import com.android.bledemo.ble.BLEManager
 import com.android.bledemo.ui.model.BLEDeviceModel
 import com.android.bledemo.utils.*
+import com.android.bledemo.utils.CommandConstant.findUUID
+import com.android.bledemo.utils.CommandConstant.getCharacteristicProperty
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class DeviceViewModel(application: Application) : AndroidViewModel(application), BLEAppInterface {
     val bleDeviceList = MutableLiveData<ArrayList<BLEDeviceModel>>()
@@ -52,13 +55,23 @@ class DeviceViewModel(application: Application) : AndroidViewModel(application),
             btnServices -> {
                 var list = ""
                 val bleModel = serviceFoundOfDevice.value
+//                ProgressUtils.getInstance(getApplication()).show()
+
                 val servicesList = bleModel?.bluetoothGatt?.services
                 for (service in servicesList!!) {
-                    list += "Service: \n    ${service.uuid}\nCharacteristics: \n"
+                    list += "Service: \n    ${service.uuid}\nName: ${findUUID(service.uuid.toString())}\n\n"
+                    list += "Characteristics: \n\n"
                     for (characteristic in service.characteristics) {
-                        list += "   ${characteristic.uuid}\n"
+                        list += "   UUID: ${characteristic.uuid} \n"
+                        list += "   Name: ${findUUID(characteristic.uuid.toString())} \n"
+                        list += "   Property: ${getCharacteristicProperty(characteristic.properties) }\n\n"
                     }
+                    list += "\n \n"
                 }
+                /*bleModel.bluetoothGatt?.readCharacteristic(
+                    servicesList[5].getCharacteristic(
+                    UUID.fromString(CommandConstant.MANUFACTURER_NAME_CHARACTERISTIC_UUID)))*/
+                Log.d("AANAL", "AANAL = $list")
                 listServiceCharacteristics.postValue(list)
             }
         }
@@ -106,7 +119,7 @@ class DeviceViewModel(application: Application) : AndroidViewModel(application),
     }
 
     /*
-    * Call when ble found services
+    * Call when services discovered
     */
     override fun foundServices(device: BLEDeviceModel) {
         serviceFoundOfDevice.postValue(device)
@@ -118,12 +131,7 @@ class DeviceViewModel(application: Application) : AndroidViewModel(application),
         }
     }
 
-    override fun enableButtons(enable: Boolean) {
-
-    }
-
-    override fun stopDownloading() {
-        bleManger?.sendCommand(CommandConstant.BLE_STOP_DOWNLOAD, selectedMacAddress = selectedMacAddress.value!!)
-
+    override fun readCharacteristics(value: ByteArray?) {
+        Log.d("AANAL", "AANAL => ${Arrays.toString(value)}")
     }
 }

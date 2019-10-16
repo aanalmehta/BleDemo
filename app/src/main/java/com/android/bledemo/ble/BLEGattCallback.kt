@@ -52,7 +52,7 @@ class BLEGattCallback(private val bleAppInterface: BLEAppInterface, private val 
         val bleDeviceModel = bleManager.hashMap!![gatt.device.address]
 
         if (status == BluetoothGatt.GATT_SUCCESS) {
-            val bleService: List<BluetoothGattService>? = bleDeviceModel!!.bluetoothGatt!!.services
+            val bleService: List<BluetoothGattService>? = bleDeviceModel?.bluetoothGatt?.services
 
             bleService?.map { it.characteristics }?.forEach { characteristicList ->
                 characteristicList
@@ -66,7 +66,7 @@ class BLEGattCallback(private val bleAppInterface: BLEAppInterface, private val 
                 bleAppInterface.foundServices(bleDeviceModel)
             }
             bleAppInterface.connectionStatus(
-                bleDeviceModel,
+                bleDeviceModel!!,
                 BLEManager.ConnectionStatus.CONNECTED
             )
         } else {
@@ -81,6 +81,18 @@ class BLEGattCallback(private val bleAppInterface: BLEAppInterface, private val 
         super.onCharacteristicWrite(gatt, characteristic, status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
             Log.d(TAG, "onCharacteristicWrite")
+        }
+    }
+
+    override fun onCharacteristicRead(
+        gatt: BluetoothGatt?,
+        characteristic: BluetoothGattCharacteristic?,
+        status: Int
+    ) {
+        super.onCharacteristicRead(gatt, characteristic, status)
+        if (status == BluetoothGatt.GATT_SUCCESS) {
+            Log.d(TAG, "onCharacteristicRead")
+            bleAppInterface.readCharacteristics(characteristic?.value)
         }
     }
 

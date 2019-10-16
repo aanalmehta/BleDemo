@@ -75,18 +75,6 @@ class HeartRateFragment : AppFragment(), CharacteristicsChangeInterface {
 
         fragmentScope = getFragmentScope(this)
 
-        deviceViewModel?.commandResult?.observe(this, Observer {
-
-        })
-
-        deviceViewModel?.listServiceCharacteristics?.observe(this, Observer {
-            DialogUtils.okDialog(context!!, "", it, object :
-                OkDialogInterface {
-                override fun ok() {
-                }
-            })
-        })
-
         deviceViewModel?.connectedDevice?.observe(this, Observer {
             val device: BLEDeviceModel? = it!!.first[it.second]
             if (device != null) {

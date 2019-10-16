@@ -16,9 +16,7 @@ interface BLEAppInterface {
 
     fun setCommandResult(value: String)
 
-    fun enableButtons(enable: Boolean)
-
-    fun stopDownloading()
-
     fun deviceFound(device: BLEDeviceModel)
+
+    fun readCharacteristics(value: ByteArray?)
 }

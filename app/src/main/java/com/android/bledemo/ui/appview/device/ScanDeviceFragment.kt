@@ -49,11 +49,10 @@ class ScanDeviceFragment : AppFragment() {
                 bundle.putString(AppConstant.BUNDLE_FRAG_SERVICE_FROM, AppConstant.BUNDLE_FROM_DEVICE_SCAN)
                 bundle.putParcelable(AppConstant.BUNDLE_BLE_DEVICE, it)
 
-                it.selectedService = CommandConstant.BLE_SERVICE_UUID
-                it.selectedCharacteristic = CommandConstant.BLE_CHARACTERISTIC_UUID
+                it.selectedService = CommandConstant.HEART_RATE_SERVICE_UUID
+                it.selectedCharacteristic = CommandConstant.HEART_RATE_CHARACTERISTIC_UUID
                 (context as MainActivity).appFragmentManager?.addFragment(
                     AppFragmentState.F_HEART_RATE, bundle, false)
-
 
                 deviceViewModel?.stopScanningDevices()
             }

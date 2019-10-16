@@ -27,10 +27,10 @@ data class BLEDeviceModel(val bleDevice: BluetoothDevice) : Parcelable {
     val hashMapGattCharacteristic = HashMap<String, BluetoothGattCharacteristic>()
 
     @IgnoredOnParcel
-    var selectedService: String = CommandConstant.BLE_SERVICE_UUID
+    var selectedService: String = CommandConstant.HEART_RATE_SERVICE_UUID
 
     @IgnoredOnParcel
-    var selectedCharacteristic: String = CommandConstant.BLE_CHARACTERISTIC_UUID
+    var selectedCharacteristic: String = CommandConstant.HEART_RATE_CHARACTERISTIC_UUID
 
     @IgnoredOnParcel
     var manufacturerId: Int = 0

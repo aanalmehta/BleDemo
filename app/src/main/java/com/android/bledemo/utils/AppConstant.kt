@@ -8,7 +8,7 @@ object AppConstant {
 
     // Ble timer
     const val BLE_DESCRIPTOR_WRITE_DELAY = 2000L
-    const val DEFAULT_SCAN_TIME_OUT = 60000L
+    const val DEFAULT_SCAN_TIME_OUT = 30000L
 
     // Bundle data
     const val BUNDLE_BLE_DEVICE: String = "device"
