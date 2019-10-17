@@ -55,12 +55,11 @@ class DeviceViewModel(application: Application) : AndroidViewModel(application),
             btnServices -> {
                 var list = ""
                 val bleModel = serviceFoundOfDevice.value
-//                ProgressUtils.getInstance(getApplication()).show()
-
                 val servicesList = bleModel?.bluetoothGatt?.services
                 for (service in servicesList!!) {
-                    list += "Service: \n    ${service.uuid}\nName: ${findUUID(service.uuid.toString())}\n\n"
-                    list += "Characteristics: \n\n"
+                    list += "Service: \n    UUID: ${service.uuid}\n " +
+                            "   Name: ${findUUID(service.uuid.toString())}\n\n"
+                    list += "Characteristics: \n"
                     for (characteristic in service.characteristics) {
                         list += "   UUID: ${characteristic.uuid} \n"
                         list += "   Name: ${findUUID(characteristic.uuid.toString())} \n"

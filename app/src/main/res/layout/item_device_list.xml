@@ -25,17 +25,17 @@
             android:id="@+id/ivBluetooth"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvName"
-            app:layout_constraintBottom_toBottomOf="@+id/tvIP"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRSSI"
             android:layout_width="wrap_content"
-            android:padding="8dp"
+            android:padding="16dp"
             bind:setImage='@{device.imageManufacturer !=null ? device.imageManufacturer :@drawable/ic_bluetooth }'
             android:layout_height="wrap_content" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvName"
+            android:layout_marginTop="16dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:gravity="center_vertical"
             android:text='@{device.bleDevice.name !=null ? device.bleDevice.name :@string/empty_device_name }'
@@ -45,17 +45,31 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvIP"
+            android:id="@+id/tvMacAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:lines="1"
-            android:text="@{device.bleDevice.address}"
+            android:text='@{String.format(@string/label_mac_address, device.bleDevice.address)}'
+            app:layout_constraintEnd_toStartOf="@+id/btnConnectState"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintBottom_toTopOf="@+id/tvRSSI"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRSSI"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text='@{String.format(@string/label_rssi, device.rssi)}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnConnectState"
             app:layout_constraintStart_toStartOf="@+id/tvName"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvMacAddress" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnConnectState"

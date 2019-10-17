@@ -5,16 +5,20 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanFilter
 import android.bluetooth.le.ScanResult
+import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.os.Build
 import android.os.Handler
+import android.os.ParcelUuid
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.android.bledemo.ui.model.BLEDeviceModel
 import com.android.bledemo.utils.AppConstant
 import com.android.bledemo.utils.AppConstant.DEFAULT_SCAN_TIME_OUT
 import com.android.bledemo.utils.AppConstant.PREF_DEVICE_MAC_ADDRESS
+import com.android.bledemo.utils.CommandConstant
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -44,7 +48,7 @@ class BLEManager {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private val scanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
-            Log.d(TAG, "onScanResult")
+            Log.d("AANAL", "AANAL - onScanResult DeviceName: ${result.device.name} RSSI: ${result.rssi} MAC: ${result.device.address}")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val device: BluetoothDevice = result.device
                 if (!contains(device.address)) {
@@ -52,9 +56,9 @@ class BLEManager {
                     val manufacturerData = result.scanRecord?.manufacturerSpecificData
                     for (i in 0 until manufacturerData?.size()!!) {
                         val manufacturerId = manufacturerData.keyAt(i)
-                        Log.d(TAG, "AANAL manufacturerId $manufacturerId")
                         bleDevice.manufacturerId = manufacturerId
                     }
+                    bleDevice.rssi = result.rssi
                     deviceList.add(bleDevice)
                     if (bleAppInterface != null) {
                         if (device.address == PREF_DEVICE_MAC_ADDRESS)
@@ -66,11 +70,9 @@ class BLEManager {
             }
         }
 
-        override fun onBatchScanResults(results: List<ScanResult>) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                results[0].device
-            }
-            super.onBatchScanResults(results)
+        override fun onScanFailed(errorCode: Int) {
+            super.onScanFailed(errorCode)
+            Log.d("AANAL", "AANAL onScanFailed with $errorCode")
         }
     }
 
@@ -90,7 +92,6 @@ class BLEManager {
         this.bleAppInterface = bleAppInterface
         commandManager = BLECommandManager(bleAppInterface)
         myBluetoothGattCallback = BLEGattCallback(bleAppInterface, commandManager!!, this)
-
     }
 
     /**
@@ -105,7 +106,7 @@ class BLEManager {
         if (!isBluetoothEnabled) {
             clearDeviceList(connectedDevices)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //
+
                 /*val scanFilter = ScanFilter.Builder()
                     .setServiceUuid(ParcelUuid(UUID.fromString(CommandConstant.HEART_RATE_SERVICE_UUID)))
                     .build()

@@ -8,18 +8,14 @@ import java.util.*
 class BLEGattCallback(private val bleAppInterface: BLEAppInterface, private val commandManager: BLECommandManager, private val bleManager: BLEManager
 ) : BluetoothGattCallback() {
 
-    private var responseId = 0.0
     override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
         super.onConnectionStateChange(gatt, status, newState)
+        Log.d("AANAL", "AANAL => onConnectionStateChange")
         val bleDeviceModel = bleManager.hashMap!![gatt.device.address]
         if (status == BluetoothGatt.GATT_SUCCESS) {
             when (newState) {
                 BluetoothGatt.STATE_CONNECTED -> {
                     bleDeviceModel?.bluetoothGatt?.discoverServices()
-//                    bleAppInterface.connectionStatus(
-//                        bleDeviceModel!!,
-//                        BLEManager.ConnectionStatus.CONNECTED
-//                    )
                     bleManager.addDevice(gatt.device.address)
                 }
                 BluetoothGatt.STATE_DISCONNECTED -> {
@@ -49,6 +45,7 @@ class BLEGattCallback(private val bleAppInterface: BLEAppInterface, private val 
 
     override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
         super.onServicesDiscovered(gatt, status)
+        Log.d("AANAL", "AANAL => onServicesDiscovered")
         val bleDeviceModel = bleManager.hashMap!![gatt.device.address]
 
         if (status == BluetoothGatt.GATT_SUCCESS) {
@@ -80,7 +77,7 @@ class BLEGattCallback(private val bleAppInterface: BLEAppInterface, private val 
     override fun onCharacteristicWrite(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic, status: Int) {
         super.onCharacteristicWrite(gatt, characteristic, status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
-            Log.d(TAG, "onCharacteristicWrite")
+            Log.d("AANAL", "onCharacteristicWrite")
         }
     }
 
@@ -91,30 +88,23 @@ class BLEGattCallback(private val bleAppInterface: BLEAppInterface, private val 
     ) {
         super.onCharacteristicRead(gatt, characteristic, status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
-            Log.d(TAG, "onCharacteristicRead")
+            Log.d("AANAL", "onCharacteristicRead")
             bleAppInterface.readCharacteristics(characteristic?.value)
         }
     }
 
     override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
        super.onCharacteristicChanged(gatt, characteristic)
-        Log.e("SAMPLE_DATA", "AANAL onCharacteristicChanged called ${Arrays.toString(characteristic.value)}")
-        responseId++
-
-        commandManager.parseResponse(characteristic.value) //FIXME Send byte[] as parameter : DONE
+        Log.e("AANAL", "AANAL onCharacteristicChanged called ${Arrays.toString(characteristic.value)}")
+        commandManager.parseResponse(characteristic.value)
     }
 
     override fun onDescriptorRead(gatt: BluetoothGatt, descriptor: BluetoothGattDescriptor, status: Int) {
         super.onDescriptorRead(gatt, descriptor, status)
         if (status == BluetoothGatt.GATT_SUCCESS) {
-            Log.e(TAG, String(descriptor.value))
+            Log.e("AANAL", String(descriptor.value))
         }
     }
-
-    companion object {
-        private val TAG = BLEGattCallback::class.java.simpleName
-    }
-
 }
 
 

@@ -47,6 +47,7 @@ class DeviceListAdapter(private val context: Context, private val deviceViewMode
             list[position].manufacturerId == 117 -> // Samsung Electronics
                 list[position].imageManufacturer = ContextCompat.getDrawable(context, R.drawable.ic_bluetooth)
         }
+
         holder.bind(list[position])
         holder.itemView.btnConnectState.setOnClickListener {
             ProgressUtils.getInstance(context).show()
@@ -55,20 +56,6 @@ class DeviceListAdapter(private val context: Context, private val deviceViewMode
             } else {
                 deviceViewModel.bleManger?.connectDevice(list[position])
             }
-
-        }
-        holder.itemView.setOnClickListener {
-            val device = list[position]
-            if (device.connectionState == AppConstant.BLE_STATE_DISCONNECT) {
-                device.bluetoothGatt?.requestMtu(35)
-                device.bluetoothGatt?.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_HIGH)
-                val bundle = Bundle()
-                bundle.putString(AppConstant.BUNDLE_FRAG_SERVICE_FROM, AppConstant.BUNDLE_FROM_DEVICE_SCAN)
-                bundle.putParcelable(AppConstant.BUNDLE_BLE_DEVICE, device)
-                (context as MainActivity).appFragmentManager?.addFragment(
-                    AppFragmentState.F_HEART_RATE, bundle, false)
-            }
-
 
         }
     }

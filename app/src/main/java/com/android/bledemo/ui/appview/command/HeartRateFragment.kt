@@ -111,18 +111,16 @@ class HeartRateFragment : AppFragment(), CharacteristicsChangeInterface {
                     Log.d("AANAL", "AANAL ${device.selectedCharacteristic}")
                     if (device.selectedCharacteristic != "") {
                         if (device.hashMapGattCharacteristic[device.selectedCharacteristic]!!.descriptors.size != 0) {
-                            Handler().postDelayed({
-                                if (context != null) {
-                                    for (descriptor in device.hashMapGattCharacteristic[device.selectedCharacteristic]!!.descriptors) {
-                                        descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-                                        device.bluetoothGatt?.writeDescriptor(descriptor)
-                                        deviceViewModel?.isDeviceConnected?.postValue(true)
-                                        startAnimation()
-                                        deviceViewModel?.connectionState?.postValue(getString(R.string.lbl_device_connected, device.bluetoothGatt?.device?.name))
-                                        ProgressUtils.getInstance(activity!!).close()
-                                    }
+                            if (context != null) {
+                                for (descriptor in device.hashMapGattCharacteristic[device.selectedCharacteristic]!!.descriptors) {
+                                    descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                                    device.bluetoothGatt?.writeDescriptor(descriptor)
+                                    deviceViewModel?.isDeviceConnected?.postValue(true)
+                                    startAnimation()
+                                    deviceViewModel?.connectionState?.postValue(getString(R.string.lbl_device_connected, device.bluetoothGatt?.device?.name))
+                                    ProgressUtils.getInstance(activity!!).close()
                                 }
-                            }, BLE_DESCRIPTOR_WRITE_DELAY)
+                            }
                         } else {
                             ProgressUtils.getInstance(activity!!).close()
                         }

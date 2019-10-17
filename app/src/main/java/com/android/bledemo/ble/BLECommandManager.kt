@@ -1,16 +1,8 @@
 package com.android.bledemo.ble
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 
 class BLECommandManager(private val bleAppInterface: BLEAppInterface) {
-
-    private var handler: Handler? = null
-
-    init {
-        handler = Handler(Looper.getMainLooper())
-    }
 
     /**
      *  This function will call when onCharacteristicChanged will call

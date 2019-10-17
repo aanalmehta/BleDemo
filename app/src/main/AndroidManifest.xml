@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.bledemo">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" /><!--Required to access Bluetooth class-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /><!--Required for to execute Scan Callbacks-->
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- Mandatory for Android 28+ -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <uses-feature android:name="android.hardware.bluetooth" />

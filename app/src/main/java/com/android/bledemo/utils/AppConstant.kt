@@ -1,12 +1,11 @@
 package com.android.bledemo.utils
 
 object AppConstant {
-    //  Ble state
+    // Connection state
     const val BLE_STATE_CONNECT = "Connect"
     const val BLE_STATE_DISCONNECT = "Disconnect"
     const val BLE_STATE_CONNECTING = "Connecting"
 
-    // Ble timer
     const val BLE_DESCRIPTOR_WRITE_DELAY = 2000L
     const val DEFAULT_SCAN_TIME_OUT = 30000L
 

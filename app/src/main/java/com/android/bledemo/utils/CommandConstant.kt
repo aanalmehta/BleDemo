@@ -3,7 +3,7 @@ package com.android.bledemo.utils
 import android.bluetooth.BluetoothGattCharacteristic
 
 object CommandConstant {
-    var GENERIC_SERVICE_UUID = "00001800-0000-1000-8000-00805f9b34fb"
+    var GENERIC_SERVICE_UUID = "00001800-0000-1000-8000-00805f9b34fb"// Generic information of device like DeviceName
     var DEVICE_NAME_CHARACTERISTIC_UUID = "00002a00-0000-1000-8000-00805f9b34fb"
     var APPEARANCE_CHARACTERISTIC_UUID = "00002a01-0000-1000-8000-00805f9b34fb"
     var CONNECTION_PARAMETERS_CHARACTERISTIC_UUID = "00002a04-0000-1000-8000-00805f9b34fb"

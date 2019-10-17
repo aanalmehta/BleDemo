@@ -58,7 +58,6 @@ class ScanDeviceFragment : AppFragment() {
             }
         })
         setListData()
-
     }
 
     private fun setListData() {
@@ -66,5 +65,4 @@ class ScanDeviceFragment : AppFragment() {
         rcvDeviceList.setHasFixedSize(true)
         rcvDeviceList.adapter = adapter
     }
-
 }

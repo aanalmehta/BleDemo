@@ -37,4 +37,7 @@ data class BLEDeviceModel(val bleDevice: BluetoothDevice) : Parcelable {
 
     @IgnoredOnParcel
     var imageManufacturer: Drawable? = null
+
+    @IgnoredOnParcel
+    var rssi: Int = 0
 }

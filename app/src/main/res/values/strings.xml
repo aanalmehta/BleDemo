@@ -13,4 +13,6 @@
     <string name="label_bpm">BPM</string>
     <string name="label_blank">-</string>
     <string name="label_services_list">Show list of Services and Characteristics</string>
+    <string name="label_rssi">RSSI: %d</string>
+    <string name="label_mac_address">MAC: %s</string>
 </resources>
